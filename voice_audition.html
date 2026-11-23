@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mia & Pip 角色語音試聽室</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fff9ef;
+      --ink: #2d3142;
+      --muted: #6c7280;
+      --accent: #ff8c42;
+      --mint: #52b788;
+      --sky: #4ea8de;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Nunito', 'Noto Sans TC', system-ui, sans-serif;
+      background: radial-gradient(circle at top, #fffdf7 0%, #f9eedb 100%);
+      color: var(--ink);
+      padding: 28px 18px 56px;
+    }
+    .wrap { max-width: 900px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 28px; }
+    h1 { margin: 0 0 8px; font-size: clamp(1.7rem, 4vw, 2.4rem); font-weight: 900; }
+    .sub { margin: 0; color: var(--muted); line-height: 1.6; }
+    .role-section {
+      background: #fff;
+      border: 3px solid #f0e4ce;
+      border-radius: 24px;
+      padding: 22px 24px;
+      margin-bottom: 22px;
+      box-shadow: 0 10px 28px rgba(45, 49, 66, 0.08);
+    }
+    .role-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+    .role-title { margin: 0; font-size: 1.35rem; font-weight: 900; }
+    .sample-line {
+      font-size: 0.95rem;
+      color: var(--muted);
+      background: #fdf6e9;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+    }
+    .voice-card {
+      border: 2px solid #ecdcc1;
+      border-radius: 18px;
+      padding: 16px;
+      background: #fffdf8;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .voice-name { font-weight: 900; font-size: 1.05rem; }
+    .voice-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.45; flex: 1; }
+    audio { width: 100%; height: 40px; }
+    .back-link {
+      display: inline-block;
+      margin-top: 12px;
+      text-decoration: none;
+      background: var(--mint);
+      color: #fff;
+      font-weight: 800;
+      padding: 10px 22px;
+      border-radius: 999px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>🎙️ Mia &amp; Pip 角色語音試聽室</h1>
+      <p class="sub">以下是使用 <strong>Microsoft Neural TTS（Edge-TTS）</strong> 生成的真人感英語語音樣本。<br/>你可以先按播放試聽，選出每個角色最喜歡的聲音，我再幫你把整本繪本都換成高品質 MP3 語音！</p>
+      <a class="back-link" href="book1_hello_pip.html">← 回到第 1 冊繪本</a>
+    </header>
+
+    <section class="role-section">
+      <div class="role-head">
+        <h2 class="role-title">👧 Mia（6 歲小一女生）</h2>
+        <span class="sample-line">"Hello, Pip! How are you today?"</span>
+      </div>
+      <div class="cards">
+        <div class="voice-card">
+          <div class="voice-name">1. Ana（推薦 · 真實兒童女聲）</div>
+          <div class="voice-desc">美式小女孩童聲，語氣自然親切，最符合小一女生的年齡感。</div>
+          <audio controls preload="none" src="assets/audition/mia_ana.mp3"></audio>
+        </div>
+        <div class="voice-card">
+          <div class="voice-name">2. Aria（活潑少女聲）</div>
+          <div class="voice-desc">美式年輕女聲，咬字清晰、表情豐富，像親切的大姊姊說故事。</div>
+          <audio controls preload="none" src="assets/audition/mia_aria.mp3"></audio>
+        </div>
+      </div>
+    </section>
+
+    <section class="role-section">
+      <div class="role-head">
+        <h2 class="role-title">🦖 Pip（圓滾滾可愛小恐龍）</h2>
+        <span class="sample-line">"Yummy! I'm happy! How are you, Mia?"</span>
+      </div>
+      <div class="cards">
+        <div class="voice-card">
+          <div class="voice-name">1. Maisie（推薦 · 超萌小童聲）</div>
+          <div class="voice-desc">英式可愛童聲，天真軟萌，很有小寵物／小恐龍的討喜感。</div>
+          <audio controls preload="none" src="assets/audition/pip_maisie.mp3"></audio>
+        </div>
+        <div class="voice-card">
+          <div class="voice-name">2. Guy + 高音調（調皮卡通聲）</div>
+          <div class="voice-desc">將男聲調高音頻（+35Hz），帶有調皮小男孩／卡通小怪獸的趣味感。</div>
+          <audio controls preload="none" src="assets/audition/pip_guy_high.mp3"></audio>
+        </div>
+        <div class="voice-card">
+          <div class="voice-name">3. Andrew + 高音調（圓潤可愛聲）</div>
+          <div class="voice-desc">將溫暖男聲調高音頻（+40Hz），聲音圓潤有戲劇感。</div>
+          <audio controls preload="none" src="assets/audition/pip_andrew_high.mp3"></audio>
+        </div>
+      </div>
+    </section>
+
+    <section class="role-section">
+      <div class="role-head">
+        <h2 class="role-title">👩 Mom（溫柔媽媽）</h2>
+        <span class="sample-line">"Here you are! Good job, Pip!"</span>
+      </div>
+      <div class="cards">
+        <div class="voice-card">
+          <div class="voice-name">1. Jenny（推薦 · 溫暖美式媽媽）</div>
+          <div class="voice-desc">自然溫暖的美式女聲，鼓勵孩子時很有親切感。</div>
+          <audio controls preload="none" src="assets/audition/mom_jenny.mp3"></audio>
+        </div>
+        <div class="voice-card">
+          <div class="voice-name">2. Sonia（優雅英式媽媽）</div>
+          <div class="voice-desc">柔和清晰的英式女聲，像溫柔的繪本朗讀老師。</div>
+          <audio controls preload="none" src="assets/audition/mom_sonia.mp3"></audio>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
