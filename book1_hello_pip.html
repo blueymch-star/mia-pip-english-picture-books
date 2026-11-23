@@ -1276,9 +1276,33 @@
         bookCard.innerHTML = `
           <section class="panel-page">
             <h2 class="panel-title">🎵 Sing Together! 一起唱〈Hello, Pip!〉</h2>
-            <p class="panel-desc">搭配大家熟悉的《兩隻老虎》旋律，跟著 Mia 和 Pip 唱出今天學到的英文！</p>
+            <p class="panel-desc">先聽聽 <strong>YuE 2 AI 完整演唱版</strong>（烏克麗麗＋木琴兒歌），也可以用下方《兩隻老虎》逐句慢速練唱！</p>
+
+            <div style="background:linear-gradient(135deg,#fff5d6,#ffe8cc);border:3px solid #ffc078;border-radius:22px;padding:18px 20px;margin-bottom:20px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px;">
+                <strong style="font-size:1.15rem;color:#c85a17;">🌟 YuE 2 AI 兒歌完整演唱版（35 秒）</strong>
+                <audio id="yue2Player" controls preload="metadata" src="assets/audio/hello_pip_yue2.mp3" style="flex:1;min-width:240px;max-width:460px;"></audio>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;font-size:1.02rem;line-height:1.6;background:rgba(255,255,255,0.75);padding:12px 16px;border-radius:14px;">
+                <div>
+                  <strong>[Verse]</strong><br/>
+                  Hello, Pip! Hello, Pip!<br/>
+                  How are you today?<br/>
+                  I am sleepy, yawn, yawn, yawn!<br/>
+                  I am hungry, oh no!
+                </div>
+                <div>
+                  <strong>[Chorus]</strong><br/>
+                  Here are cookies, yummy, yummy!<br/>
+                  Now I'm happy, jump up high!<br/>
+                  How are you? I am happy!<br/>
+                  Bye-bye, Pip! Bye-bye, Mia!
+                </div>
+              </div>
+            </div>
+
             <div class="song-controls">
-              <button type="button" class="cta-btn" id="singFullBtn">🎤 跟著 Mia &amp; Pip 一起唱</button>
+              <button type="button" class="cta-btn" id="singFullBtn">🎤 《兩隻老虎》版跟著唱</button>
               <button type="button" class="pill-btn" id="singKaraokeBtn" style="font-size:1rem;padding:12px 20px;">🎹 只放伴奏（自己唱）</button>
               <button type="button" class="pill-btn" id="stopSongBtn" style="font-size:1rem;padding:12px 18px;">⏹️ 停止</button>
             </div>
@@ -1294,6 +1318,12 @@
             </div>
           </section>
         `;
+
+        const yue2Player = document.getElementById('yue2Player');
+        if (yue2Player) {
+          yue2Player.playbackRate = slowMode ? 0.8 : 1.0;
+          yue2Player.addEventListener('play', () => clearSongTimers());
+        }
 
         const playFullSong = (withVocals) => {
           stopAllAudio();
