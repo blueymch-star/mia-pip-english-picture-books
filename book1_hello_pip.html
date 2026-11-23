@@ -655,6 +655,47 @@
       speakNextPhrase();
     }
 
+    let currentAudio = null;
+
+    function stopAllAudio() {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        currentAudio = null;
+      }
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      clearTalkingHighlights();
+    }
+
+    function playClip(file, fallbackText, speaker = 'mia', onEnd = null, bubbleEl = null) {
+      stopAllAudio();
+      if (!file) {
+        speak(fallbackText, speaker, onEnd, bubbleEl);
+        return;
+      }
+      const audio = new Audio(`assets/audio/${file}`);
+      currentAudio = audio;
+      audio.playbackRate = slowMode ? 0.78 : 1.0;
+      if (bubbleEl) bubbleEl.classList.add('talking');
+
+      const finish = () => {
+        if (bubbleEl) bubbleEl.classList.remove('talking');
+        if (currentAudio === audio) currentAudio = null;
+        if (onEnd) onEnd();
+      };
+
+      audio.addEventListener('ended', finish, { once: true });
+      audio.addEventListener('error', () => {
+        if (currentAudio === audio) currentAudio = null;
+        speak(fallbackText, speaker, onEnd, bubbleEl);
+      }, { once: true });
+
+      audio.play().catch(() => {
+        if (currentAudio === audio) currentAudio = null;
+        speak(fallbackText, speaker, onEnd, bubbleEl);
+      });
+    }
+
     function speakSequence(lines) {
       let idx = 0;
       const bubbles = document.querySelectorAll('.speech-bubble');
@@ -663,7 +704,7 @@
         const item = lines[idx];
         const bubbleEl = bubbles[idx] || null;
         idx++;
-        speak(item.speak || item.text.replace(/\*\*/g, ''), item.speaker, () => {
+        playClip(item.audio, item.speak || item.text.replace(/\*\*/g, ''), item.speaker, () => {
           setTimeout(next, 240);
         }, bubbleEl);
       }
@@ -679,8 +720,8 @@
         alt: 'Mia and baby dinosaur Pip waving hello',
         sfx: { label: '✨ 打招呼音效', sound: 'chime' },
         lines: [
-          { speaker: 'mia', label: 'Mia', text: "**Hello**! I'm Mia." },
-          { speaker: 'pip', label: 'Pip', text: "Hi! I'm Pip!" }
+          { speaker: 'mia', label: 'Mia', audio: 'p1_mia.mp3', text: "**Hello**! I'm Mia." },
+          { speaker: 'pip', label: 'Pip', audio: 'p1_pip.mp3', text: "Hi! I'm Pip!" }
         ]
       },
       {
@@ -689,8 +730,8 @@
         alt: 'Mia pulling back the bedroom curtain while Pip yawns on the bed',
         sfx: { label: '🥱 打哈欠音效', sound: 'yawn' },
         lines: [
-          { speaker: 'mia', label: 'Mia', text: "**Hello**, Pip!" },
-          { speaker: 'pip', label: 'Pip', text: "Yawn... **Hello**, Mia!", speak: "Hello, Mia!" }
+          { speaker: 'mia', label: 'Mia', audio: 'p2_mia.mp3', text: "**Hello**, Pip!" },
+          { speaker: 'pip', label: 'Pip', audio: 'p2_pip.mp3', text: "Yawn... **Hello**, Mia!", speak: "Hello, Mia!" }
         ]
       },
       {
@@ -699,8 +740,8 @@
         alt: 'Pip tucked under the pastel knit blanket looking sleepy',
         sfx: { label: '💤 Zzz...', sound: 'yawn' },
         lines: [
-          { speaker: 'mia', label: 'Mia', text: "How are you, Pip?" },
-          { speaker: 'pip', label: 'Pip', text: "I'm **sleepy**..." }
+          { speaker: 'mia', label: 'Mia', audio: 'p3_mia.mp3', text: "How are you, Pip?" },
+          { speaker: 'pip', label: 'Pip', audio: 'p3_pip.mp3', text: "I'm **sleepy**..." }
         ]
       },
       {
@@ -709,8 +750,8 @@
         alt: 'Pip holding his tummy looking hungry while Mia looks concerned',
         sfx: { label: '🦖 肚子咕嚕叫', sound: 'grumble' },
         lines: [
-          { speaker: 'mia', label: 'Mia', text: "How are you now?" },
-          { speaker: 'pip', label: 'Pip', text: "I'm **hungry**!" }
+          { speaker: 'mia', label: 'Mia', audio: 'p4_mia.mp3', text: "How are you now?" },
+          { speaker: 'pip', label: 'Pip', audio: 'p4_pip.mp3', text: "I'm **hungry**!" }
         ]
       },
       {
@@ -719,8 +760,8 @@
         alt: 'Mia holding an empty cookie jar upside down while Pip looks sad with a tear',
         sfx: { label: '😢 空罐子音效', sound: 'sad' },
         lines: [
-          { speaker: 'mia', label: 'Mia', text: "Oh no!" },
-          { speaker: 'pip', label: 'Pip', text: "I'm **sad**..." }
+          { speaker: 'mia', label: 'Mia', audio: 'p5_mia.mp3', text: "Oh no!" },
+          { speaker: 'pip', label: 'Pip', audio: 'p5_pip.mp3', text: "I'm **sad**..." }
         ]
       },
       {
@@ -729,8 +770,8 @@
         alt: 'Mom bringing a tray of golden star cookies and milk',
         sfx: { label: '🍪 香噴噴登場', sound: 'chime' },
         lines: [
-          { speaker: 'mom', label: 'Mom', text: "Here you are!" },
-          { speaker: 'mia', label: 'Mia', text: "Thank you, Mom!" }
+          { speaker: 'mom', label: 'Mom', audio: 'p6_mom.mp3', text: "Here you are!" },
+          { speaker: 'mia', label: 'Mia', audio: 'p6_mia.mp3', text: "Thank you, Mom!" }
         ]
       },
       {
@@ -739,8 +780,8 @@
         alt: 'Pip jumping joyfully after eating star cookies',
         sfx: { label: '🎉 開心歡呼', sound: 'happy' },
         lines: [
-          { speaker: 'pip', label: 'Pip', text: "Yummy! I'm **happy**!" },
-          { speaker: 'mia', label: 'Mia', text: "Good job, Pip!" }
+          { speaker: 'pip', label: 'Pip', audio: 'p7_pip.mp3', text: "Yummy! I'm **happy**!" },
+          { speaker: 'mia', label: 'Mia', audio: 'p7_mia.mp3', text: "Good job, Pip!" }
         ]
       },
       {
@@ -749,8 +790,8 @@
         alt: 'Pip offering a star cookie to Mia',
         sfx: { label: '💛 分享餅乾', sound: 'chime' },
         lines: [
-          { speaker: 'pip', label: 'Pip', text: "How are you, Mia?" },
-          { speaker: 'mia', label: 'Mia', text: "I'm **happy**, too!" }
+          { speaker: 'pip', label: 'Pip', audio: 'p8_pip.mp3', text: "How are you, Mia?" },
+          { speaker: 'mia', label: 'Mia', audio: 'p8_mia.mp3', text: "I'm **happy**, too!" }
         ]
       },
       {
@@ -759,8 +800,8 @@
         alt: 'Mia waving goodbye on the garden path as Mom and Pip wave from the doorway',
         sfx: { label: '👋 出門說再見', sound: 'chime' },
         lines: [
-          { speaker: 'mia', label: 'Mia', text: "**Bye**, Pip! **Bye**, Mom!" },
-          { speaker: 'pip', label: 'Pip', text: "**Bye**-bye, Mia!" }
+          { speaker: 'mia', label: 'Mia', audio: 'p9_mia.mp3', text: "**Bye**, Pip! **Bye**, Mom!" },
+          { speaker: 'pip', label: 'Pip', audio: 'p9_pip.mp3', text: "**Bye**-bye, Mia!" }
         ]
       },
       { type: 'review' },
@@ -770,19 +811,19 @@
     ];
 
     const EMOTIONS = [
-      { word: 'sleepy', sentence: "I'm sleepy.", zh: '想睡覺的', img: 'assets/pip_sleepy.jpg' },
-      { word: 'hungry', sentence: "I'm hungry!", zh: '肚子餓的', img: 'assets/pip_hungry.jpg' },
-      { word: 'sad', sentence: "I'm sad.", zh: '難過的', img: 'assets/scene_04_sad.jpg' },
-      { word: 'happy', sentence: "I'm happy!", zh: '開心的', img: 'assets/pip_happy.jpg' }
+      { word: 'sleepy', sentence: "I'm sleepy.", zh: '想睡覺的', img: 'assets/pip_sleepy.jpg', audio: 'rev_sleepy.mp3', quizAudio: 'quiz_sleepy.mp3' },
+      { word: 'hungry', sentence: "I'm hungry!", zh: '肚子餓的', img: 'assets/pip_hungry.jpg', audio: 'rev_hungry.mp3', quizAudio: 'quiz_hungry.mp3' },
+      { word: 'sad', sentence: "I'm sad.", zh: '難過的', img: 'assets/scene_04_sad.jpg', audio: 'rev_sad.mp3', quizAudio: 'quiz_sad.mp3' },
+      { word: 'happy', sentence: "I'm happy!", zh: '開心的', img: 'assets/pip_happy.jpg', audio: 'rev_happy.mp3', quizAudio: 'quiz_happy.mp3' }
     ];
 
     const VOCAB = [
-      { word: 'hello', zh: '你好', img: 'assets/scene_01_hello.jpg' },
-      { word: 'bye', zh: '再見', img: 'assets/scene_08_bye.jpg' },
-      { word: 'happy', zh: '開心的', img: 'assets/pip_happy.jpg' },
-      { word: 'sad', zh: '難過的', img: 'assets/scene_04_sad.jpg' },
-      { word: 'hungry', zh: '肚子餓的', img: 'assets/pip_hungry.jpg' },
-      { word: 'sleepy', zh: '想睡覺的', img: 'assets/pip_sleepy.jpg' }
+      { word: 'hello', zh: '你好', img: 'assets/scene_01_hello.jpg', audio: 'kw_hello.mp3' },
+      { word: 'bye', zh: '再見', img: 'assets/scene_08_bye.jpg', audio: 'kw_bye.mp3' },
+      { word: 'happy', zh: '開心的', img: 'assets/pip_happy.jpg', audio: 'kw_happy.mp3' },
+      { word: 'sad', zh: '難過的', img: 'assets/scene_04_sad.jpg', audio: 'kw_sad.mp3' },
+      { word: 'hungry', zh: '肚子餓的', img: 'assets/pip_hungry.jpg', audio: 'kw_hungry.mp3' },
+      { word: 'sleepy', zh: '想睡覺的', img: 'assets/pip_sleepy.jpg', audio: 'kw_sleepy.mp3' }
     ];
 
     let currentPage = 0;
@@ -834,8 +875,8 @@
           </div>
         `;
         document.getElementById('startBtn').addEventListener('click', () => {
-          speak('Hello, Pip!', 'mia');
           goToPage(1);
+          playClip('title.mp3', 'Hello, Pip!', 'mia');
         });
         return;
       }
@@ -864,14 +905,15 @@
           btn.addEventListener('click', e => {
             if (e.target.classList.contains('kw')) return;
             const line = page.lines[Number(btn.dataset.lineIdx)];
-            speak(line.speak || line.text.replace(/\*\*/g, ''), line.speaker, null, btn);
+            playClip(line.audio, line.speak || line.text.replace(/\*\*/g, ''), line.speaker, null, btn);
           });
         });
 
         bookCard.querySelectorAll('.kw').forEach(kw => {
           kw.addEventListener('click', e => {
             e.stopPropagation();
-            speak(kw.dataset.word, 'mia');
+            const w = kw.dataset.word.toLowerCase();
+            playClip(`kw_${w}.mp3`, kw.dataset.word, 'mia');
           });
         });
 
@@ -896,8 +938,8 @@
             </div>
           </section>
         `;
-        bookCard.querySelectorAll('.card-tile').forEach(t => {
-          t.addEventListener('click', () => speak(t.dataset.say, 'pip'));
+        bookCard.querySelectorAll('.card-tile').forEach((t, i) => {
+          t.addEventListener('click', () => playClip(EMOTIONS[i].audio, t.dataset.say, 'pip'));
         });
         return;
       }
@@ -924,7 +966,7 @@
         `;
         const fb = document.getElementById('quizFeedback');
         document.getElementById('playQuizBtn').addEventListener('click', () => {
-          speak(`How are you, Pip? ${target.sentence}`, 'pip');
+          playClip(target.quizAudio, `How are you, Pip? ${target.sentence}`, 'pip');
         });
         bookCard.querySelectorAll('.quiz-opt').forEach(opt => {
           opt.addEventListener('click', () => {
@@ -933,7 +975,7 @@
               quizScore++;
               fb.style.color = '#2b8a3e';
               fb.textContent = '⭐ Good job! 答對了！';
-              speak('Good job!', 'mia');
+              playClip('quiz_good.mp3', 'Good job!', 'mia');
               setTimeout(() => {
                 quizIndex++;
                 renderPage();
@@ -942,7 +984,7 @@
               playSfx('oops');
               fb.style.color = '#d9480f';
               fb.textContent = 'Oops! Try again! 再聽一次看看～';
-              speak('Oops! Try again!', 'mia');
+              playClip('quiz_oops.mp3', 'Oops! Try again!', 'mia');
             }
           });
         });
@@ -975,11 +1017,11 @@
             </div>
           </section>
         `;
-        bookCard.querySelectorAll('.card-tile').forEach(c => {
-          c.addEventListener('click', () => speak(c.dataset.word, 'mia'));
+        bookCard.querySelectorAll('.card-tile').forEach((c, i) => {
+          c.addEventListener('click', () => playClip(VOCAB[i].audio, c.dataset.word, 'mia'));
         });
-        bookCard.querySelectorAll('.speech-bubble').forEach(b => {
-          b.addEventListener('click', () => speak(b.dataset.say, 'pip'));
+        bookCard.querySelectorAll('.speech-bubble').forEach((b, i) => {
+          b.addEventListener('click', () => playClip(i === 0 ? 'dict_q.mp3' : 'dict_a.mp3', b.dataset.say, i === 0 ? 'mia' : 'pip', null, b));
         });
         return;
       }
@@ -1005,7 +1047,7 @@
     }
 
     function goToPage(index) {
-      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      stopAllAudio();
       currentPage = Math.max(0, Math.min(PAGES.length - 1, index));
       renderPage();
     }
@@ -1022,8 +1064,8 @@
     readAllBtn.addEventListener('click', () => {
       const page = PAGES[currentPage];
       if (page.lines) speakSequence(page.lines);
-      else if (page.type === 'cover') speak('Hello, Pip!', 'mia');
-      else if (page.type === 'review') speak('How is Pip?', 'mia');
+      else if (page.type === 'cover') playClip('title.mp3', 'Hello, Pip!', 'mia');
+      else if (page.type === 'review') playClip('rev_title.mp3', 'How is Pip?', 'mia');
     });
 
     document.getElementById('jumpDictBtn').addEventListener('click', () => goToPage(PAGES.length - 2));
