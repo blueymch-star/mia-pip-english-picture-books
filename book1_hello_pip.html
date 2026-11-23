@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hello, Pip! — Book 1 互動有聲英文繪本</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-cream: #fff9ef;
+      --card-bg: #ffffff;
+      --ink: #2d3142;
+      --muted: #6c7280;
+      --accent: #ff8c42;
+      --accent-dark: #e67329;
+      --mint: #52b788;
+      --sky: #4ea8de;
+      --sun: #ffd166;
+      --mia-bubble: #fff3cd;
+      --mia-border: #f4c430;
+      --pip-bubble: #e6f7ed;
+      --pip-border: #52b788;
+      --mom-bubble: #fde8ef;
+      --mom-border: #f284a8;
+      --radius-lg: 24px;
+      --shadow: 0 14px 36px rgba(45, 49, 66, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Nunito', 'Noto Sans TC', system-ui, sans-serif;
+      background: radial-gradient(circle at top, #fffdf7 0%, #f9eedb 100%);
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: inherit;
+    }
+
+    button:focus-visible, [tabindex]:focus-visible {
+      outline: 3px solid var(--sky);
+      outline-offset: 3px;
+    }
+
+    .topbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 24px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(8px);
+      border-bottom: 2px solid #f0e4ce;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.1rem;
+    }
+
+    .brand-badge {
+      background: var(--mint);
+      color: #fff;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: #f3ead8;
+      font-weight: 700;
+      font-size: 0.92rem;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    .pill-btn:hover { background: #eadbc0; transform: translateY(-1px); }
+    .pill-btn[aria-pressed="true"] {
+      background: var(--sky);
+      color: #fff;
+    }
+
+    .stage-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 16px 12px;
+    }
+
+    .book-card {
+      width: 100%;
+      max-width: 980px;
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      border: 3px solid #f2e5ce;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .scene-view {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #fdf6e9;
+      overflow: hidden;
+    }
+
+    .scene-view.cover-mode {
+      aspect-ratio: auto;
+      min-height: 520px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      background: linear-gradient(135deg, #fff6e3 0%, #fdebd0 100%);
+    }
+
+    @media (max-width: 720px) {
+      .scene-view.cover-mode {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .cover-art {
+      width: 100%;
+      height: 100%;
+      max-height: 540px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .cover-info {
+      padding: 36px 32px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .cover-tag {
+      background: var(--sun);
+      color: #5c3d00;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+
+    .cover-title {
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-weight: 900;
+      margin: 0;
+      color: var(--ink);
+      letter-spacing: -0.5px;
+    }
+
+    .cover-sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.5;
+    }
+
+    .cta-btn {
+      background: var(--accent);
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: 800;
+      padding: 14px 32px;
+      border-radius: 999px;
+      box-shadow: 0 6px 0 var(--accent-dark);
+      transition: transform 0.12s ease;
+    }
+
+    .cta-btn:hover { transform: translateY(-2px); }
+    .cta-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--accent-dark); }
+
+    .scene-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .happy-stage {
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, #fff9d6 0%, #ffe6a7 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      padding: 24px;
+    }
+
+    .happy-stage img {
+      height: 78%;
+      max-height: 360px;
+      border-radius: 24px;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+      animation: bouncePop 1.6s ease-in-out infinite;
+    }
+
+    @keyframes bouncePop {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .bubbles-layer {
+      padding: 18px 24px 22px;
+      background: #fffdf8;
+      border-top: 2px solid #f4ebd9;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .bubble-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      flex: 1;
+    }
+
+    .speech-bubble {
+      position: relative;
+      padding: 14px 20px;
+      border-radius: 20px;
+      border: 3px solid;
+      text-align: left;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      max-width: 100%;
+    }
+
+    .speech-bubble:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .speech-bubble.mia { background: var(--mia-bubble); border-color: var(--mia-border); }
+    .speech-bubble.pip { background: var(--pip-bubble); border-color: var(--pip-border); }
+    .speech-bubble.mom { background: var(--mom-bubble); border-color: var(--mom-border); }
+
+    .speaker-name {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .line-text {
+      font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    .kw {
+      display: inline-block;
+      background: #fff;
+      color: #d9480f;
+      padding: 1px 8px;
+      border-radius: 10px;
+      border: 2px dashed #ff922b;
+      margin: 0 2px;
+      cursor: pointer;
+    }
+
+    .kw:hover { background: #fff4e6; }
+
+    .sfx-btn {
+      padding: 10px 16px;
+      border-radius: 16px;
+      background: #edf2ff;
+      color: #364fc7;
+      font-weight: 800;
+      font-size: 0.95rem;
+      border: 2px solid #bac8ff;
+    }
+
+    .sfx-btn:hover { background: #dbe4ff; }
+
+    /* Grid pages: Review, Quiz, Word Bank, Parent Guide */
+    .panel-page {
+      padding: 28px 28px 32px;
+      background: #fffdf8;
+      min-height: 460px;
+    }
+
+    .panel-title {
+      margin: 0 0 6px;
+      font-size: 1.9rem;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .panel-desc {
+      margin: 0 0 22px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .card-tile {
+      background: #fff;
+      border: 3px solid #f0e4ce;
+      border-radius: 20px;
+      padding: 14px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .card-tile:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+    }
+
+    .card-tile img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 14px;
+      background: #fff9ef;
+    }
+
+    .tile-word {
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--ink);
+    }
+
+    .tile-sub {
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    .quiz-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .quiz-feedback {
+      text-align: center;
+      font-size: 1.25rem;
+      font-weight: 800;
+      min-height: 36px;
+      margin-top: 18px;
+      color: var(--mint);
+    }
+
+    .guide-box {
+      max-width: 760px;
+      margin: 0 auto;
+      background: #fff;
+      border: 2px solid #f0e4ce;
+      border-radius: 20px;
+      padding: 22px 26px;
+      line-height: 1.7;
+    }
+
+    .guide-box h3 { margin-top: 16px; margin-bottom: 8px; color: #c85a17; }
+    .guide-box ul { padding-left: 20px; margin: 0; }
+
+    .footer-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 980px;
+      width: 100%;
+      margin: 0 auto 20px;
+      padding: 0 16px;
+      gap: 12px;
+    }
+
+    .nav-btn {
+      padding: 12px 24px;
+      border-radius: 999px;
+      background: #fff;
+      border: 2px solid #e7d8be;
+      font-weight: 800;
+      font-size: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .nav-btn:hover:not(:disabled) { background: #fff4df; border-color: var(--accent); }
+    .nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .page-dots {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: #dfd0b6;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    .dot.active {
+      background: var(--accent);
+      transform: scale(1.3);
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-badge">Book 1</span>
+      <span>Hello, Pip! 互動有聲繪本</span>
+    </div>
+    <nav class="controls" aria-label="Storybook controls">
+      <button id="speedBtn" class="pill-btn" type="button" aria-pressed="false">
+        🐢 慢速跟讀：關閉 (1.0x)
+      </button>
+      <button id="readAllBtn" class="pill-btn" type="button">
+        🔊 朗讀本頁
+      </button>
+      <button id="jumpDictBtn" class="pill-btn" type="button">
+        📖 小詞典
+      </button>
+      <button id="jumpQuizBtn" class="pill-btn" type="button">
+        ⭐ 小遊戲
+      </button>
+    </nav>
+  </header>
+
+  <main class="stage-wrap">
+    <article id="bookCard" class="book-card" aria-live="polite"></article>
+  </main>
+
+  <footer class="footer-nav">
+    <button id="prevBtn" class="nav-btn" type="button">← 上一頁</button>
+    <div id="pageDots" class="page-dots" role="tablist" aria-label="Page selector"></div>
+    <button id="nextBtn" class="nav-btn" type="button">下一頁 →</button>
+  </footer>
+
+  <script>
+    // --- Audio Engine (Web Speech API + Web Audio SFX) ---
+    let slowMode = false;
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+
+    function getCtx() {
+      if (!audioCtx && AudioCtx) audioCtx = new AudioCtx();
+      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
+    }
+
+    function playSfx(type) {
+      const ctx = getCtx();
+      if (!ctx) return;
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      if (type === 'chime' || type === 'happy') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(523.25, now);
+        osc.frequency.setValueAtTime(659.25, now + 0.08);
+        osc.frequency.setValueAtTime(783.99, now + 0.16);
+        gain.gain.setValueAtTime(0.18, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+        osc.start(now);
+        osc.stop(now + 0.45);
+      } else if (type === 'yawn') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(420, now);
+        osc.frequency.exponentialRampToValueAtTime(220, now + 0.6);
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.65);
+        osc.start(now);
+        osc.stop(now + 0.65);
+      } else if (type === 'grumble') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(110, now);
+        osc.frequency.linearRampToValueAtTime(75, now + 0.4);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+        osc.start(now);
+        osc.stop(now + 0.45);
+      } else if (type === 'sad' || type === 'oops') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(340, now);
+        osc.frequency.linearRampToValueAtTime(240, now + 0.35);
+        gain.gain.setValueAtTime(0.14, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+        osc.start(now);
+        osc.stop(now + 0.4);
+      }
+    }
+
+    function speak(text, speaker = 'mia', onEnd) {
+      if (!('speechSynthesis' in window)) {
+        if (onEnd) onEnd();
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'en-US';
+      u.rate = slowMode ? 0.72 : 0.95;
+      u.pitch = speaker === 'pip' ? 1.35 : speaker === 'mom' ? 0.98 : 1.15;
+      if (onEnd) u.onend = onEnd;
+      window.speechSynthesis.speak(u);
+    }
+
+    function speakSequence(lines) {
+      let idx = 0;
+      function next() {
+        if (idx >= lines.length) return;
+        const item = lines[idx++];
+        speak(item.speak || item.text.replace(/\*\*/g, ''), item.speaker, () => {
+          setTimeout(next, 250);
+        });
+      }
+      next();
+    }
+
+    // --- Book Data (Aligned with 02_Book1_Hello_Pip_分鏡腳本.md) ---
+    const PAGES = [
+      { type: 'cover' },
+      {
+        type: 'story',
+        img: 'assets/characters_mia_pip_3d.jpg',
+        alt: 'Mia and baby dinosaur Pip waving hello',
+        sfx: { label: '✨ 打招呼音效', sound: 'chime' },
+        lines: [
+          { speaker: 'mia', label: 'Mia', text: "**Hello**! I'm Mia." },
+          { speaker: 'pip', label: 'Pip', text: "Hi! I'm Pip!" }
+        ]
+      },
+      {
+        type: 'story',
+        img: 'assets/scene_01_hello.jpg',
+        alt: 'Mia pulling back the bedroom curtain while Pip yawns on the bed',
+        sfx: { label: '🥱 打哈欠音效', sound: 'yawn' },
+        lines: [
+          { speaker: 'mia', label: 'Mia', text: "**Hello**, Pip!" },
+          { speaker: 'pip', label: 'Pip', text: "Yawn... **Hello**, Mia!", speak: "Hello, Mia!" }
+        ]
+      },
+      {
+        type: 'story',
+        img: 'assets/scene_02_sleepy.jpg',
+        alt: 'Pip tucked under the pastel knit blanket looking sleepy',
+        sfx: { label: '💤 Zzz...', sound: 'yawn' },
+        lines: [
+          { speaker: 'mia', label: 'Mia', text: "How are you, Pip?" },
+          { speaker: 'pip', label: 'Pip', text: "I'm **sleepy**..." }
+        ]
+      },
+      {
+        type: 'story',
+        img: 'assets/scene_03_hungry.jpg',
+        alt: 'Pip holding his tummy looking hungry while Mia looks concerned',
+        sfx: { label: '🦖 肚子咕嚕叫', sound: 'grumble' },
+        lines: [
+          { speaker: 'mia', label: 'Mia', text: "How are you now?" },
+          { speaker: 'pip', label: 'Pip', text: "I'm **hungry**!" }
+        ]
+      },
+      {
+        type: 'story',
+        img: 'assets/scene_04_sad.jpg',
+        alt: 'Mia holding an empty cookie jar upside down while Pip looks sad with a tear',
+        sfx: { label: '😢 空罐子音效', sound: 'sad' },
+        lines: [
+          { speaker: 'mia', label: 'Mia', text: "Oh no!" },
+          { speaker: 'pip', label: 'Pip', text: "I'm **sad**..." }
+        ]
+      },
+      {
+        type: 'story',
+        img: 'assets/scene_05_mom_cookies.jpg',
+        alt: 'Mom bringing a tray of golden star cookies and milk',
+        sfx: { label: '🍪 香噴噴登場', sound: 'chime' },
+        lines: [
+          { speaker: 'mom', label: 'Mom', text: "Here you are!" },
+          { speaker: 'mia', label: 'Mia', text: "Thank you, Mom!" }
+        ]
+      },
+      {
+        type: 'happy-custom',
+        img: 'assets/pip_happy.jpg',
+        alt: 'Pip jumping joyfully after eating star cookies',
+        sfx: { label: '🎉 開心歡呼', sound: 'happy' },
+        lines: [
+          { speaker: 'pip', label: 'Pip', text: "Yummy! I'm **happy**!" },
+          { speaker: 'mia', label: 'Mia', text: "Good job, Pip!" }
+        ]
+      },
+      {
+        type: 'story',
+        img: 'assets/scene_07_share.jpg',
+        alt: 'Pip offering a star cookie to Mia',
+        sfx: { label: '💛 分享餅乾', sound: 'chime' },
+        lines: [
+          { speaker: 'pip', label: 'Pip', text: "How are you, Mia?" },
+          { speaker: 'mia', label: 'Mia', text: "I'm **happy**, too!" }
+        ]
+      },
+      {
+        type: 'story',
+        img: 'assets/scene_08_bye.jpg',
+        alt: 'Mia waving goodbye on the garden path as Mom and Pip wave from the doorway',
+        sfx: { label: '👋 出門說再見', sound: 'chime' },
+        lines: [
+          { speaker: 'mia', label: 'Mia', text: "**Bye**, Pip! **Bye**, Mom!" },
+          { speaker: 'pip', label: 'Pip', text: "**Bye**-bye, Mia!" }
+        ]
+      },
+      { type: 'review' },
+      { type: 'quiz' },
+      { type: 'dictionary' },
+      { type: 'guide' }
+    ];
+
+    const EMOTIONS = [
+      { word: 'sleepy', sentence: "I'm sleepy.", zh: '想睡覺的', img: 'assets/pip_sleepy.jpg' },
+      { word: 'hungry', sentence: "I'm hungry!", zh: '肚子餓的', img: 'assets/pip_hungry.jpg' },
+      { word: 'sad', sentence: "I'm sad.", zh: '難過的', img: 'assets/scene_04_sad.jpg' },
+      { word: 'happy', sentence: "I'm happy!", zh: '開心的', img: 'assets/pip_happy.jpg' }
+    ];
+
+    const VOCAB = [
+      { word: 'hello', zh: '你好', img: 'assets/scene_01_hello.jpg' },
+      { word: 'bye', zh: '再見', img: 'assets/scene_08_bye.jpg' },
+      { word: 'happy', zh: '開心的', img: 'assets/pip_happy.jpg' },
+      { word: 'sad', zh: '難過的', img: 'assets/scene_04_sad.jpg' },
+      { word: 'hungry', zh: '肚子餓的', img: 'assets/pip_hungry.jpg' },
+      { word: 'sleepy', zh: '想睡覺的', img: 'assets/pip_sleepy.jpg' }
+    ];
+
+    let currentPage = 0;
+    let quizIndex = 0;
+    let quizScore = 0;
+
+    const bookCard = document.getElementById('bookCard');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const pageDots = document.getElementById('pageDots');
+    const speedBtn = document.getElementById('speedBtn');
+    const readAllBtn = document.getElementById('readAllBtn');
+
+    function formatLineHtml(text) {
+      return text.replace(/\*\*(.+?)\*\*/g, (_, w) => {
+        const clean = w.replace(/[^a-zA-Z'-]/g, '');
+        return `<span class="kw" role="button" tabindex="0" data-word="${clean}" title="點擊聽單字">${w}</span>`;
+      });
+    }
+
+    function renderDots() {
+      pageDots.innerHTML = '';
+      PAGES.forEach((_, i) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'dot' + (i === currentPage ? ' active' : '');
+        b.setAttribute('aria-label', `第 ${i + 1} 頁`);
+        b.addEventListener('click', () => goToPage(i));
+        pageDots.appendChild(b);
+      });
+    }
+
+    function renderPage() {
+      const page = PAGES[currentPage];
+      prevBtn.disabled = currentPage === 0;
+      nextBtn.disabled = currentPage === PAGES.length - 1;
+      renderDots();
+
+      if (page.type === 'cover') {
+        bookCard.innerHTML = `
+          <div class="scene-view cover-mode">
+            <img class="cover-art" src="assets/book1_cover_3d.jpg" alt="Hello, Pip! 封面插畫" />
+            <div class="cover-info">
+              <span class="cover-tag">Book 1 · 打招呼與情緒</span>
+              <h1 class="cover-title">Hello, Pip!</h1>
+              <p class="cover-sub">小一零基礎英文啟蒙繪本<br/>點點文字與圖片，跟著 Mia 和小恐龍 Pip 一起開口說英文！</p>
+              <button class="cta-btn" type="button" id="startBtn">▶ Start Reading 開始看故事</button>
+            </div>
+          </div>
+        `;
+        document.getElementById('startBtn').addEventListener('click', () => {
+          speak('Hello, Pip!', 'mia');
+          goToPage(1);
+        });
+        return;
+      }
+
+      if (page.type === 'story' || page.type === 'happy-custom') {
+        const visualHtml = page.type === 'happy-custom'
+          ? `<div class="happy-stage"><img src="${page.img}" alt="${page.alt}" /></div>`
+          : `<img class="scene-img" src="${page.img}" alt="${page.alt}" />`;
+
+        const bubblesHtml = page.lines.map((line, idx) => `
+          <button type="button" class="speech-bubble ${line.speaker}" data-line-idx="${idx}">
+            <span class="speaker-name">${line.label} 🔊</span>
+            <span class="line-text">${formatLineHtml(line.text)}</span>
+          </button>
+        `).join('');
+
+        bookCard.innerHTML = `
+          <div class="scene-view">${visualHtml}</div>
+          <div class="bubbles-layer">
+            <div class="bubble-group">${bubblesHtml}</div>
+            ${page.sfx ? `<button type="button" class="sfx-btn" id="sfxBtn">${page.sfx.label}</button>` : ''}
+          </div>
+        `;
+
+        bookCard.querySelectorAll('.speech-bubble').forEach(btn => {
+          btn.addEventListener('click', e => {
+            if (e.target.classList.contains('kw')) return;
+            const line = page.lines[Number(btn.dataset.lineIdx)];
+            speak(line.speak || line.text.replace(/\*\*/g, ''), line.speaker);
+          });
+        });
+
+        bookCard.querySelectorAll('.kw').forEach(kw => {
+          kw.addEventListener('click', e => {
+            e.stopPropagation();
+            speak(kw.dataset.word, 'mia');
+          });
+        });
+
+        const sfxBtn = document.getElementById('sfxBtn');
+        if (sfxBtn) sfxBtn.addEventListener('click', () => playSfx(page.sfx.sound));
+        return;
+      }
+
+      if (page.type === 'review') {
+        bookCard.innerHTML = `
+          <section class="panel-page">
+            <h2 class="panel-title">How is Pip?</h2>
+            <p class="panel-desc">點點看四張表情卡片，聽聽 Pip 今天的心情變化！</p>
+            <div class="grid-4">
+              ${EMOTIONS.map(em => `
+                <button type="button" class="card-tile" data-say="${em.sentence}">
+                  <img src="${em.img}" alt="Pip is ${em.word}" />
+                  <span class="tile-word">${em.sentence}</span>
+                  <span class="tile-sub">${em.zh}</span>
+                </button>
+              `).join('')}
+            </div>
+          </section>
+        `;
+        bookCard.querySelectorAll('.card-tile').forEach(t => {
+          t.addEventListener('click', () => speak(t.dataset.say, 'pip'));
+        });
+        return;
+      }
+
+      if (page.type === 'quiz') {
+        const target = EMOTIONS[quizIndex % EMOTIONS.length];
+        bookCard.innerHTML = `
+          <section class="panel-page">
+            <h2 class="panel-title">Listen & Tap! 聽聲音找表情</h2>
+            <p class="panel-desc">先按「播放題目」，再點選出正確的 Pip 圖片！（第 ${(quizIndex % EMOTIONS.length) + 1} / 4 題 · 星星：⭐ ${quizScore}）</p>
+            <div class="quiz-bar">
+              <button type="button" class="cta-btn" id="playQuizBtn">🔊 播放題目</button>
+            </div>
+            <div class="grid-4">
+              ${EMOTIONS.map(em => `
+                <button type="button" class="card-tile quiz-opt" data-word="${em.word}">
+                  <img src="${em.img}" alt="${em.word}" />
+                  <span class="tile-word">${em.word}</span>
+                </button>
+              `).join('')}
+            </div>
+            <div id="quizFeedback" class="quiz-feedback" aria-live="polite"></div>
+          </section>
+        `;
+        const fb = document.getElementById('quizFeedback');
+        document.getElementById('playQuizBtn').addEventListener('click', () => {
+          speak(`How are you, Pip? ${target.sentence}`, 'pip');
+        });
+        bookCard.querySelectorAll('.quiz-opt').forEach(opt => {
+          opt.addEventListener('click', () => {
+            if (opt.dataset.word === target.word) {
+              playSfx('happy');
+              quizScore++;
+              fb.style.color = '#2b8a3e';
+              fb.textContent = '⭐ Good job! 答對了！';
+              speak('Good job!', 'mia');
+              setTimeout(() => {
+                quizIndex++;
+                renderPage();
+              }, 1100);
+            } else {
+              playSfx('oops');
+              fb.style.color = '#d9480f';
+              fb.textContent = 'Oops! Try again! 再聽一次看看～';
+              speak('Oops! Try again!', 'mia');
+            }
+          });
+        });
+        return;
+      }
+
+      if (page.type === 'dictionary') {
+        bookCard.innerHTML = `
+          <section class="panel-page">
+            <h2 class="panel-title">Word Bank 有聲小詞典</h2>
+            <p class="panel-desc">點擊單字卡或對話泡泡，複習本冊 6 個核心單字與生活對話！</p>
+            <div class="grid-3">
+              ${VOCAB.map(v => `
+                <button type="button" class="card-tile" data-word="${v.word}">
+                  <img src="${v.img}" alt="${v.word}" />
+                  <span class="tile-word">${v.word}</span>
+                  <span class="tile-sub">${v.zh}</span>
+                </button>
+              `).join('')}
+            </div>
+            <div style="display:flex;gap:12px;justify-content:center;margin-top:20px;flex-wrap:wrap;">
+              <button type="button" class="speech-bubble mia" data-say="How are you?">
+                <span class="speaker-name">核心問句 🔊</span>
+                <span class="line-text">How are you?</span>
+              </button>
+              <button type="button" class="speech-bubble pip" data-say="I'm happy!">
+                <span class="speaker-name">核心回答 🔊</span>
+                <span class="line-text">I'm happy!</span>
+              </button>
+            </div>
+          </section>
+        `;
+        bookCard.querySelectorAll('.card-tile').forEach(c => {
+          c.addEventListener('click', () => speak(c.dataset.word, 'mia'));
+        });
+        bookCard.querySelectorAll('.speech-bubble').forEach(b => {
+          b.addEventListener('click', () => speak(b.dataset.say, 'pip'));
+        });
+        return;
+      }
+
+      if (page.type === 'guide') {
+        bookCard.innerHTML = `
+          <section class="panel-page">
+            <h2 class="panel-title">家長導讀與生活練習</h2>
+            <p class="panel-desc">不用背單字，把繪本裡的問候帶進每天的親子對話中</p>
+            <div class="guide-box">
+              <h3>📖 故事中文大意</h3>
+              <p>早晨陽光灑進房間，Mia 叫醒愛睏的小恐龍 Pip（<em>I'm sleepy</em>）。Pip 一起床就喊肚子餓（<em>I'm hungry</em>），但客廳的餅乾罐卻空空的，Pip 難過得掉眼淚（<em>I'm sad</em>）。還好媽媽端來剛烤好的星星餅乾和牛奶，Pip 吃飽後開心地跳起來（<em>I'm happy</em>），還分給 Mia 吃，最後一起開心地揮手說再見（<em>Bye-bye</em>）！</p>
+              <h3>💡 親子生活 3 個小練習</h3>
+              <ul>
+                <li><strong>起床問候</strong>：早上叫孩子起床時，微笑說一句 <em>"Good morning! Hello!"</em>。</li>
+                <li><strong>情緒表達</strong>：孩子想睡或肚子餓時，引導他模仿 Pip 說 <em>"I'm sleepy."</em> 或 <em>"I'm hungry!"</em>。</li>
+                <li><strong>睡前問答</strong>：睡前互相問一句 <em>"How are you today?"</em>，用英文聊聊今天的心情。</li>
+              </ul>
+            </div>
+          </section>
+        `;
+      }
+    }
+
+    function goToPage(index) {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      currentPage = Math.max(0, Math.min(PAGES.length - 1, index));
+      renderPage();
+    }
+
+    prevBtn.addEventListener('click', () => goToPage(currentPage - 1));
+    nextBtn.addEventListener('click', () => goToPage(currentPage + 1));
+
+    speedBtn.addEventListener('click', () => {
+      slowMode = !slowMode;
+      speedBtn.setAttribute('aria-pressed', String(slowMode));
+      speedBtn.textContent = slowMode ? '🐢 慢速跟讀：開啟 (0.8x)' : '🐢 慢速跟讀：關閉 (1.0x)';
+    });
+
+    readAllBtn.addEventListener('click', () => {
+      const page = PAGES[currentPage];
+      if (page.lines) speakSequence(page.lines);
+      else if (page.type === 'cover') speak('Hello, Pip!', 'mia');
+      else if (page.type === 'review') speak('How is Pip?', 'mia');
+    });
+
+    document.getElementById('jumpDictBtn').addEventListener('click', () => goToPage(PAGES.length - 2));
+    document.getElementById('jumpQuizBtn').addEventListener('click', () => goToPage(PAGES.length - 3));
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') goToPage(currentPage + 1);
+      if (e.key === 'ArrowLeft') goToPage(currentPage - 1);
+    });
+
+    renderPage();
+  </script>
+</body>
+</html>

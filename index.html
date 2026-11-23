@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mia & Pip 小一英文啟蒙繪本系列</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fff9ef;
+      --ink: #2d3142;
+      --muted: #6c7280;
+      --accent: #ff8c42;
+      --accent-dark: #e67329;
+      --mint: #52b788;
+      --sun: #ffd166;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Nunito', 'Noto Sans TC', system-ui, sans-serif;
+      background: radial-gradient(circle at top, #fffdf7 0%, #f9eedb 100%);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+    header {
+      text-align: center;
+      padding: 36px 20px 20px;
+    }
+    .badge {
+      display: inline-block;
+      background: var(--mint);
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.9rem;
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      font-weight: 900;
+    }
+    .subtitle {
+      margin: 0 auto;
+      max-width: 600px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 1.05rem;
+    }
+    main {
+      max-width: 1020px;
+      margin: 0 auto;
+      padding: 20px 20px 56px;
+    }
+    .featured {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 28px;
+      background: #fff;
+      border: 3px solid #f0e4ce;
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: 0 14px 36px rgba(45, 49, 66, 0.1);
+      align-items: center;
+      margin-bottom: 36px;
+    }
+    @media (max-width: 720px) {
+      .featured { grid-template-columns: 1fr; text-align: center; }
+    }
+    .featured img {
+      width: 100%;
+      border-radius: 20px;
+      display: block;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+    .book-tag {
+      display: inline-block;
+      background: var(--sun);
+      color: #5c3d00;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+    .featured h2 {
+      margin: 0 0 8px;
+      font-size: 2rem;
+      font-weight: 900;
+    }
+    .featured p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .cta-link {
+      display: inline-block;
+      text-decoration: none;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.15rem;
+      padding: 14px 28px;
+      border-radius: 999px;
+      box-shadow: 0 5px 0 var(--accent-dark);
+      transition: transform 0.12s ease;
+    }
+    .cta-link:hover { transform: translateY(-2px); }
+    .shelf-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin: 0 0 16px;
+    }
+    .shelf-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 16px;
+    }
+    .coming-card {
+      background: rgba(255, 255, 255, 0.72);
+      border: 2px dashed #dfd0b6;
+      border-radius: 20px;
+      padding: 18px;
+      color: var(--muted);
+    }
+    .coming-card strong {
+      display: block;
+      color: var(--ink);
+      font-size: 1.05rem;
+      margin: 6px 0 4px;
+    }
+    .coming-num {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--mint);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="badge">小一零基礎 · 3D 皮克斯風格</span>
+    <h1>Mia &amp; Pip 互動英文有聲繪本</h1>
+    <p class="subtitle">不用背單字、不用看中文翻譯，跟著小女生 Mia 與小恐龍 Pip 的生活故事，點一點就能聽發音、開口說英文！</p>
+  </header>
+
+  <main>
+    <section class="featured" aria-label="已上線繪本">
+      <img src="assets/book1_cover_3d.jpg" alt="Book 1 Hello, Pip! 封面" />
+      <div>
+        <span class="book-tag">Book 1 · 已上線</span>
+        <h2>Hello, Pip!</h2>
+        <p>
+          <strong>主題：</strong>打招呼與情緒（Greetings &amp; Feelings）<br />
+          <strong>核心單字：</strong>hello, bye, happy, sad, hungry, sleepy<br />
+          <strong>互動功能：</strong>角色分聲朗讀、0.8x 慢速跟讀、聽音找表情小遊戲、有聲小詞典
+        </p>
+        <a class="cta-link" href="book1_hello_pip.html">▶ 開始看第 1 冊繪本</a>
+      </div>
+    </section>
+
+    <section aria-label="後續系列預告">
+      <h2 class="shelf-title">系列書櫃預告（Book 2 – Book 8）</h2>
+      <div class="shelf-grid">
+        <div class="coming-card">
+          <span class="coming-num">Book 2 · 籌備中</span>
+          <strong>Jump, Pip, Jump!</strong>
+          <span>身體與動作（jump, run, clap, nose, ears）</span>
+        </div>
+        <div class="coming-card">
+          <span class="coming-num">Book 3 · 籌備中</span>
+          <strong>Where Is My Red Ball?</strong>
+          <span>顏色與玩具（red, blue, yellow, ball, car）</span>
+        </div>
+        <div class="coming-card">
+          <span class="coming-num">Book 4 · 籌備中</span>
+          <strong>Do You Like Apples?</strong>
+          <span>食物與喜好（apple, banana, milk, cake）</span>
+        </div>
+        <div class="coming-card">
+          <span class="coming-num">Book 5 · 籌備中</span>
+          <strong>I See a Big Dog!</strong>
+          <span>動物與大小（dog, cat, bird, big, small）</span>
+        </div>
+        <div class="coming-card">
+          <span class="coming-num">Book 6 · 籌備中</span>
+          <strong>Where Is Mom?</strong>
+          <span>家人與我的家（mom, dad, bed, sofa, box）</span>
+        </div>
+        <div class="coming-card">
+          <span class="coming-num">Book 7 · 籌備中</span>
+          <strong>Open Your Bag!</strong>
+          <span>學校與文具（book, pencil, bag, eraser）</span>
+        </div>
+        <div class="coming-card">
+          <span class="coming-num">Book 8 · 籌備中</span>
+          <strong>Good Morning, Sunny Day!</strong>
+          <span>天氣與作息（sunny, rainy, wake up, sleep）</span>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
