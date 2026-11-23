@@ -58,9 +58,9 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      padding: 12px 24px;
-      background: rgba(255, 255, 255, 0.88);
+      gap: 10px;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(8px);
       border-bottom: 2px solid #f0e4ce;
     }
@@ -70,7 +70,7 @@
       align-items: center;
       gap: 10px;
       font-weight: 800;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
     }
 
     .brand-badge {
@@ -84,19 +84,19 @@
     .controls {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
     .pill-btn {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 8px 14px;
+      gap: 5px;
+      padding: 7px 13px;
       border-radius: 999px;
       background: #f3ead8;
       font-weight: 700;
-      font-size: 0.92rem;
+      font-size: 0.88rem;
       transition: transform 0.15s ease, background 0.15s ease;
     }
 
@@ -105,13 +105,17 @@
       background: var(--sky);
       color: #fff;
     }
+    .pill-btn.active-tab {
+      background: var(--accent);
+      color: #fff;
+    }
 
     .stage-wrap {
       flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px 16px 12px;
+      padding: 16px 16px 10px;
     }
 
     .book-card {
@@ -134,9 +138,25 @@
       overflow: hidden;
     }
 
+    .scene-view.tappable { cursor: pointer; }
+
+    .tap-hint {
+      position: absolute;
+      bottom: 12px;
+      left: 14px;
+      background: rgba(255, 255, 255, 0.88);
+      color: var(--ink);
+      font-size: 0.82rem;
+      font-weight: 800;
+      padding: 5px 12px;
+      border-radius: 999px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      pointer-events: none;
+    }
+
     .scene-view.cover-mode {
       aspect-ratio: auto;
-      min-height: 520px;
+      min-height: 500px;
       display: grid;
       grid-template-columns: 1fr 1fr;
       align-items: center;
@@ -144,26 +164,24 @@
     }
 
     @media (max-width: 720px) {
-      .scene-view.cover-mode {
-        grid-template-columns: 1fr;
-      }
+      .scene-view.cover-mode { grid-template-columns: 1fr; }
     }
 
     .cover-art {
       width: 100%;
       height: 100%;
-      max-height: 540px;
+      max-height: 520px;
       object-fit: cover;
       display: block;
     }
 
     .cover-info {
-      padding: 36px 32px;
+      padding: 32px 28px;
       text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
     }
 
     .cover-tag {
@@ -186,18 +204,18 @@
     .cover-sub {
       margin: 0;
       color: var(--muted);
-      font-size: 1.05rem;
-      line-height: 1.5;
+      font-size: 1.02rem;
+      line-height: 1.55;
     }
 
     .cta-btn {
       background: var(--accent);
       color: #fff;
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       font-weight: 800;
-      padding: 14px 32px;
+      padding: 13px 30px;
       border-radius: 999px;
-      box-shadow: 0 6px 0 var(--accent-dark);
+      box-shadow: 0 5px 0 var(--accent-dark);
       transition: transform 0.12s ease;
     }
 
@@ -211,6 +229,21 @@
       display: block;
     }
 
+    .warmup-stage {
+      width: 100%;
+      height: 100%;
+      background: #fdf2dc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .warmup-stage img {
+      height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
     .happy-stage {
       width: 100%;
       height: 100%;
@@ -218,12 +251,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 28px;
       padding: 24px;
     }
 
     .happy-stage img {
-      height: 78%;
+      height: 82%;
       max-height: 360px;
       border-radius: 24px;
       box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
@@ -236,12 +268,12 @@
     }
 
     .bubbles-layer {
-      padding: 18px 24px 22px;
+      padding: 16px 22px 20px;
       background: #fffdf8;
       border-top: 2px solid #f4ebd9;
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
+      gap: 12px;
       align-items: center;
       justify-content: space-between;
     }
@@ -249,13 +281,13 @@
     .bubble-group {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
+      gap: 12px;
       flex: 1;
     }
 
     .speech-bubble {
       position: relative;
-      padding: 14px 20px;
+      padding: 12px 18px;
       border-radius: 20px;
       border: 3px solid;
       text-align: left;
@@ -279,16 +311,16 @@
 
     .speaker-name {
       display: block;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.6px;
       color: var(--muted);
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
 
     .line-text {
-      font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+      font-size: clamp(1.2rem, 2.4vw, 1.58rem);
       font-weight: 800;
       line-height: 1.3;
     }
@@ -306,48 +338,76 @@
 
     .kw:hover { background: #fff4e6; }
 
+    .side-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .replay-circle {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 1.35rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 0 var(--accent-dark);
+      transition: transform 0.12s ease;
+    }
+
+    .replay-circle:hover { transform: scale(1.06); }
+
     .sfx-btn {
-      padding: 10px 16px;
+      padding: 10px 15px;
       border-radius: 16px;
       background: #edf2ff;
       color: #364fc7;
       font-weight: 800;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       border: 2px solid #bac8ff;
     }
 
     .sfx-btn:hover { background: #dbe4ff; }
 
-    /* Grid pages: Review, Quiz, Word Bank, Parent Guide */
     .panel-page {
-      padding: 28px 28px 32px;
+      padding: 26px 26px 30px;
       background: #fffdf8;
       min-height: 460px;
     }
 
     .panel-title {
       margin: 0 0 6px;
-      font-size: 1.9rem;
+      font-size: 1.85rem;
       font-weight: 900;
       text-align: center;
     }
 
     .panel-desc {
-      margin: 0 0 22px;
+      margin: 0 0 20px;
       text-align: center;
       color: var(--muted);
-      font-size: 1rem;
+      font-size: 0.98rem;
     }
 
     .grid-4 {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
       gap: 16px;
     }
 
     .grid-3 {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 16px;
     }
 
@@ -360,7 +420,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       transition: transform 0.15s ease, border-color 0.15s ease;
     }
 
@@ -371,14 +431,14 @@
 
     .card-tile img {
       width: 100%;
-      height: 160px;
+      height: 165px;
       object-fit: cover;
       border-radius: 14px;
       background: #fff9ef;
     }
 
     .tile-word {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 900;
       color: var(--ink);
     }
@@ -388,12 +448,29 @@
       color: var(--muted);
     }
 
+    .chant-card {
+      background: #fff;
+      border: 3px solid #f0e4ce;
+      border-radius: 22px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-align: left;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .chant-card:hover { transform: translateY(-2px); border-color: var(--mint); }
+    .chant-card img { width: 92px; height: 92px; border-radius: 16px; object-fit: cover; flex-shrink: 0; }
+    .chant-line { font-size: 1.15rem; font-weight: 900; color: var(--ink); display: block; margin-bottom: 4px; }
+    .chant-act { font-size: 0.92rem; font-weight: 700; color: var(--mint); }
+
     .quiz-bar {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 14px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       flex-wrap: wrap;
     }
 
@@ -402,9 +479,20 @@
       font-size: 1.25rem;
       font-weight: 800;
       min-height: 36px;
-      margin-top: 18px;
+      margin-top: 16px;
       color: var(--mint);
     }
+
+    .win-box {
+      text-align: center;
+      padding: 36px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .trophy { font-size: 4.2rem; animation: bouncePop 1.4s ease-in-out infinite; }
 
     .guide-box {
       max-width: 760px;
@@ -412,11 +500,11 @@
       background: #fff;
       border: 2px solid #f0e4ce;
       border-radius: 20px;
-      padding: 22px 26px;
+      padding: 20px 24px;
       line-height: 1.7;
     }
 
-    .guide-box h3 { margin-top: 16px; margin-bottom: 8px; color: #c85a17; }
+    .guide-box h3 { margin-top: 14px; margin-bottom: 6px; color: #c85a17; }
     .guide-box ul { padding-left: 20px; margin: 0; }
 
     .footer-nav {
@@ -425,13 +513,13 @@
       justify-content: space-between;
       max-width: 980px;
       width: 100%;
-      margin: 0 auto 20px;
+      margin: 0 auto 18px;
       padding: 0 16px;
       gap: 12px;
     }
 
     .nav-btn {
-      padding: 12px 24px;
+      padding: 11px 22px;
       border-radius: 999px;
       background: #fff;
       border: 2px solid #e7d8be;
@@ -468,21 +556,19 @@
   <header class="topbar">
     <div class="brand">
       <span class="brand-badge">Book 1</span>
-      <span>Hello, Pip! 互動有聲繪本</span>
+      <span>Hello, Pip!</span>
     </div>
     <nav class="controls" aria-label="Storybook controls">
+      <button id="autoReadBtn" class="pill-btn" type="button" aria-pressed="true">
+        🔊 自動朗讀：開啟
+      </button>
       <button id="speedBtn" class="pill-btn" type="button" aria-pressed="false">
-        🐢 慢速跟讀：關閉 (1.0x)
+        🐢 慢速：關
       </button>
-      <button id="readAllBtn" class="pill-btn" type="button">
-        🔊 朗讀本頁
-      </button>
-      <button id="jumpDictBtn" class="pill-btn" type="button">
-        📖 小詞典
-      </button>
-      <button id="jumpQuizBtn" class="pill-btn" type="button">
-        ⭐ 小遊戲
-      </button>
+      <button id="jumpStoryBtn" class="pill-btn" type="button">📖 故事</button>
+      <button id="jumpChantBtn" class="pill-btn" type="button">💃 動一動</button>
+      <button id="jumpQuizBtn" class="pill-btn" type="button">⭐ 小遊戲</button>
+      <button id="jumpDictBtn" class="pill-btn" type="button">🔤 小詞典</button>
     </nav>
   </header>
 
@@ -497,8 +583,11 @@
   </footer>
 
   <script>
-    // --- Audio Engine (Web Speech API + Web Audio SFX) ---
     let slowMode = false;
+    let autoRead = true;
+    let currentAudio = null;
+    let sequenceToken = 0;
+
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     let audioCtx = null;
 
@@ -553,111 +642,12 @@
       }
     }
 
-    const SPEAKER_CAST = {
-      mia: { pitch: 1.28, rate: 1.04, prefs: ['ana', 'aria', 'samantha', 'google us english', 'zira', 'karen'] },
-      pip: { pitch: 1.72, rate: 1.08, prefs: ['guy', 'google uk english male', 'daniel', 'david', 'mark', 'fred'] },
-      mom: { pitch: 0.90, rate: 0.92, prefs: ['jenny', 'sonia', 'libby', 'google uk english female', 'victoria', 'hazel'] }
-    };
-    let voiceMap = {};
-
-    function assignVoices() {
-      if (!('speechSynthesis' in window)) return;
-      const all = window.speechSynthesis.getVoices().filter(v => v.lang && v.lang.toLowerCase().startsWith('en'));
-      if (!all.length) return;
-
-      const scoreVoice = (v) => {
-        const n = v.name.toLowerCase();
-        let s = 0;
-        if (n.includes('natural') || n.includes('online')) s += 30;
-        if (n.includes('google')) s += 20;
-        if (v.lang.toLowerCase() === 'en-us') s += 5;
-        return s;
-      };
-      const sorted = [...all].sort((a, b) => scoreVoice(b) - scoreVoice(a));
-      const used = new Set();
-
-      ['mia', 'mom', 'pip'].forEach(role => {
-        const prefs = SPEAKER_CAST[role].prefs;
-        let pick = sorted.find(v => !used.has(v.name) && prefs.some(p => v.name.toLowerCase().includes(p)));
-        if (!pick) pick = sorted.find(v => !used.has(v.name));
-        if (!pick) pick = sorted[0];
-        if (pick) {
-          voiceMap[role] = pick;
-          used.add(pick.name);
-        }
-      });
-    }
-
-    if ('speechSynthesis' in window) {
-      assignVoices();
-      window.speechSynthesis.onvoiceschanged = assignVoices;
-    }
-
-    function splitExpressivePhrases(text) {
-      const cleaned = text.replace(/\*\*/g, '').trim();
-      const parts = cleaned.match(/[^.!?]+(?:\.\.\.|[.!?])?/g) || [cleaned];
-      return parts.map(p => p.trim()).filter(Boolean);
-    }
-
     function clearTalkingHighlights() {
       document.querySelectorAll('.speech-bubble.talking').forEach(el => el.classList.remove('talking'));
     }
 
-    function speak(text, speaker = 'mia', onEnd, bubbleEl = null) {
-      if (!('speechSynthesis' in window)) {
-        if (onEnd) onEnd();
-        return;
-      }
-      window.speechSynthesis.cancel();
-      clearTalkingHighlights();
-      if (!Object.keys(voiceMap).length) assignVoices();
-
-      const profile = SPEAKER_CAST[speaker] || SPEAKER_CAST.mia;
-      const phrases = splitExpressivePhrases(text);
-      let idx = 0;
-
-      if (bubbleEl) bubbleEl.classList.add('talking');
-
-      function speakNextPhrase() {
-        if (idx >= phrases.length) {
-          if (bubbleEl) bubbleEl.classList.remove('talking');
-          if (onEnd) onEnd();
-          return;
-        }
-        const phrase = phrases[idx++];
-        const u = new SpeechSynthesisUtterance(phrase);
-        u.lang = 'en-US';
-        if (voiceMap[speaker]) u.voice = voiceMap[speaker];
-
-        let pitchDelta = 0;
-        let rateDelta = 0;
-        if (phrase.endsWith('...')) {
-          pitchDelta = -0.18;
-          rateDelta = -0.18;
-        } else if (phrase.endsWith('!')) {
-          pitchDelta = 0.14;
-          rateDelta = 0.06;
-        } else if (phrase.endsWith('?')) {
-          pitchDelta = 0.10;
-        }
-
-        const baseRate = slowMode ? 0.74 : profile.rate;
-        u.rate = Math.max(0.55, Math.min(1.4, baseRate + rateDelta));
-        u.pitch = Math.max(0.5, Math.min(2.0, profile.pitch + pitchDelta));
-        u.onend = () => setTimeout(speakNextPhrase, 90);
-        u.onerror = () => {
-          if (bubbleEl) bubbleEl.classList.remove('talking');
-          if (onEnd) onEnd();
-        };
-        window.speechSynthesis.speak(u);
-      }
-
-      speakNextPhrase();
-    }
-
-    let currentAudio = null;
-
     function stopAllAudio() {
+      sequenceToken++;
       if (currentAudio) {
         currentAudio.pause();
         currentAudio.currentTime = 0;
@@ -667,10 +657,39 @@
       clearTalkingHighlights();
     }
 
-    function playClip(file, fallbackText, speaker = 'mia', onEnd = null, bubbleEl = null) {
-      stopAllAudio();
+    function speakFallback(text, speaker = 'mia', onEnd = null, bubbleEl = null) {
+      if (!('speechSynthesis' in window)) {
+        if (onEnd) onEnd();
+        return;
+      }
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'en-US';
+      u.rate = slowMode ? 0.74 : 0.96;
+      u.pitch = speaker === 'pip' ? 1.55 : speaker === 'mom' ? 0.95 : 1.2;
+      if (bubbleEl) bubbleEl.classList.add('talking');
+      u.onend = () => {
+        if (bubbleEl) bubbleEl.classList.remove('talking');
+        if (onEnd) onEnd();
+      };
+      u.onerror = () => {
+        if (bubbleEl) bubbleEl.classList.remove('talking');
+        if (onEnd) onEnd();
+      };
+      window.speechSynthesis.speak(u);
+    }
+
+    function playClip(file, fallbackText, speaker = 'mia', onEnd = null, bubbleEl = null, keepToken = false) {
+      const token = keepToken ? sequenceToken : ++sequenceToken;
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        currentAudio = null;
+      }
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      clearTalkingHighlights();
+
       if (!file) {
-        speak(fallbackText, speaker, onEnd, bubbleEl);
+        speakFallback(fallbackText, speaker, onEnd, bubbleEl);
         return;
       }
       const audio = new Audio(`assets/audio/${file}`);
@@ -681,42 +700,55 @@
       const finish = () => {
         if (bubbleEl) bubbleEl.classList.remove('talking');
         if (currentAudio === audio) currentAudio = null;
-        if (onEnd) onEnd();
+        if (token === sequenceToken && onEnd) onEnd();
       };
 
       audio.addEventListener('ended', finish, { once: true });
       audio.addEventListener('error', () => {
         if (currentAudio === audio) currentAudio = null;
-        speak(fallbackText, speaker, onEnd, bubbleEl);
+        if (token === sequenceToken) speakFallback(fallbackText, speaker, onEnd, bubbleEl);
       }, { once: true });
 
       audio.play().catch(() => {
         if (currentAudio === audio) currentAudio = null;
-        speak(fallbackText, speaker, onEnd, bubbleEl);
+        if (token === sequenceToken) speakFallback(fallbackText, speaker, onEnd, bubbleEl);
       });
     }
 
     function speakSequence(lines) {
+      const token = ++sequenceToken;
       let idx = 0;
       const bubbles = document.querySelectorAll('.speech-bubble');
       function next() {
-        if (idx >= lines.length) return;
+        if (token !== sequenceToken || idx >= lines.length) return;
         const item = lines[idx];
         const bubbleEl = bubbles[idx] || null;
         idx++;
         playClip(item.audio, item.speak || item.text.replace(/\*\*/g, ''), item.speaker, () => {
           setTimeout(next, 240);
-        }, bubbleEl);
+        }, bubbleEl, true);
       }
       next();
     }
 
-    // --- Book Data (Aligned with 02_Book1_Hello_Pip_分鏡腳本.md) ---
+    function playClipChain(clips) {
+      const token = ++sequenceToken;
+      let idx = 0;
+      function next() {
+        if (token !== sequenceToken || idx >= clips.length) return;
+        const c = clips[idx++];
+        playClip(c.file, c.text, c.speaker, () => {
+          setTimeout(next, 220);
+        }, null, true);
+      }
+      next();
+    }
+
     const PAGES = [
       { type: 'cover' },
       {
-        type: 'story',
-        img: 'assets/characters_mia_pip_3d.jpg',
+        type: 'warmup',
+        img: 'assets/warmup_mia_pip.jpg',
         alt: 'Mia and baby dinosaur Pip waving hello',
         sfx: { label: '✨ 打招呼音效', sound: 'chime' },
         lines: [
@@ -750,7 +782,7 @@
         alt: 'Pip holding his tummy looking hungry while Mia looks concerned',
         sfx: { label: '🦖 肚子咕嚕叫', sound: 'grumble' },
         lines: [
-          { speaker: 'mia', label: 'Mia', audio: 'p4_mia.mp3', text: "How are you now?" },
+          { speaker: 'mia', label: 'Mia', audio: 'p4_mia.mp3', text: "How are you, Pip?" },
           { speaker: 'pip', label: 'Pip', audio: 'p4_pip.mp3', text: "I'm **hungry**!" }
         ]
       },
@@ -801,46 +833,98 @@
         sfx: { label: '👋 出門說再見', sound: 'chime' },
         lines: [
           { speaker: 'mia', label: 'Mia', audio: 'p9_mia.mp3', text: "**Bye**, Pip! **Bye**, Mom!" },
-          { speaker: 'pip', label: 'Pip', audio: 'p9_pip.mp3', text: "**Bye**-bye, Mia!" }
+          { speaker: 'pip', label: 'Pip', audio: 'p9_pip.mp3', text: "**Bye-bye**, Mia!" }
         ]
       },
       { type: 'review' },
+      { type: 'chant' },
       { type: 'quiz' },
       { type: 'dictionary' },
       { type: 'guide' }
     ];
 
     const EMOTIONS = [
-      { word: 'sleepy', sentence: "I'm sleepy.", zh: '想睡覺的', img: 'assets/pip_sleepy.jpg', audio: 'rev_sleepy.mp3', quizAudio: 'quiz_sleepy.mp3' },
-      { word: 'hungry', sentence: "I'm hungry!", zh: '肚子餓的', img: 'assets/pip_hungry.jpg', audio: 'rev_hungry.mp3', quizAudio: 'quiz_hungry.mp3' },
-      { word: 'sad', sentence: "I'm sad.", zh: '難過的', img: 'assets/scene_04_sad.jpg', audio: 'rev_sad.mp3', quizAudio: 'quiz_sad.mp3' },
-      { word: 'happy', sentence: "I'm happy!", zh: '開心的', img: 'assets/pip_happy.jpg', audio: 'rev_happy.mp3', quizAudio: 'quiz_happy.mp3' }
+      { word: 'sleepy', sentence: "I'm sleepy.", zh: '想睡覺的', img: 'assets/pip_sleepy.jpg', audio: 'rev_sleepy.mp3' },
+      { word: 'hungry', sentence: "I'm hungry!", zh: '肚子餓的', img: 'assets/pip_hungry.jpg', audio: 'rev_hungry.mp3' },
+      { word: 'sad', sentence: "I'm sad.", zh: '難過的', img: 'assets/pip_sad.jpg', audio: 'rev_sad.mp3' },
+      { word: 'happy', sentence: "I'm happy!", zh: '開心的', img: 'assets/pip_happy.jpg', audio: 'rev_happy.mp3' }
+    ];
+
+    const CHANTS = [
+      {
+        word: 'sleepy',
+        line: 'Sleepy, sleepy, yawn!',
+        action: '🥱 動作：伸懶腰、張嘴打一個大哈欠！',
+        img: 'assets/pip_sleepy.jpg',
+        chantAudio: 'chant_sleepy.mp3',
+        pipAudio: 'rev_sleepy.mp3',
+        pipLine: "I'm sleepy."
+      },
+      {
+        word: 'hungry',
+        line: 'Hungry, hungry, rub your tummy!',
+        action: '😋 動作：雙手摸摸圓圓的肚子！',
+        img: 'assets/pip_hungry.jpg',
+        chantAudio: 'chant_hungry.mp3',
+        pipAudio: 'rev_hungry.mp3',
+        pipLine: "I'm hungry!"
+      },
+      {
+        word: 'sad',
+        line: 'Sad, sad, boo-hoo!',
+        action: '😢 動作：雙手揉揉眼睛假裝哭哭！',
+        img: 'assets/pip_sad.jpg',
+        chantAudio: 'chant_sad.mp3',
+        pipAudio: 'rev_sad.mp3',
+        pipLine: "I'm sad."
+      },
+      {
+        word: 'happy',
+        line: 'Happy, happy, jump up high!',
+        action: '🙌 動作：雙手舉高高、用力跳起來！',
+        img: 'assets/pip_happy.jpg',
+        chantAudio: 'chant_happy.mp3',
+        pipAudio: 'rev_happy.mp3',
+        pipLine: "I'm happy!"
+      }
     ];
 
     const VOCAB = [
       { word: 'hello', zh: '你好', img: 'assets/scene_01_hello.jpg', audio: 'kw_hello.mp3' },
       { word: 'bye', zh: '再見', img: 'assets/scene_08_bye.jpg', audio: 'kw_bye.mp3' },
       { word: 'happy', zh: '開心的', img: 'assets/pip_happy.jpg', audio: 'kw_happy.mp3' },
-      { word: 'sad', zh: '難過的', img: 'assets/scene_04_sad.jpg', audio: 'kw_sad.mp3' },
+      { word: 'sad', zh: '難過的', img: 'assets/pip_sad.jpg', audio: 'kw_sad.mp3' },
       { word: 'hungry', zh: '肚子餓的', img: 'assets/pip_hungry.jpg', audio: 'kw_hungry.mp3' },
       { word: 'sleepy', zh: '想睡覺的', img: 'assets/pip_sleepy.jpg', audio: 'kw_sleepy.mp3' }
     ];
 
+    function shuffle(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
     let currentPage = 0;
+    let quizOrder = shuffle(EMOTIONS);
     let quizIndex = 0;
     let quizScore = 0;
+    let quizLocked = false;
 
     const bookCard = document.getElementById('bookCard');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const pageDots = document.getElementById('pageDots');
     const speedBtn = document.getElementById('speedBtn');
-    const readAllBtn = document.getElementById('readAllBtn');
+    const autoReadBtn = document.getElementById('autoReadBtn');
 
     function formatLineHtml(text) {
       return text.replace(/\*\*(.+?)\*\*/g, (_, w) => {
-        const clean = w.replace(/[^a-zA-Z'-]/g, '');
-        return `<span class="kw" role="button" tabindex="0" data-word="${clean}" title="點擊聽單字">${w}</span>`;
+        const clean = w.replace(/[^a-zA-Z-]/g, '').toLowerCase();
+        const kwFile = clean === 'bye-bye' ? 'kw_byebye.mp3' : `kw_${clean}.mp3`;
+        return `<span class="kw" role="button" tabindex="0" data-word="${w}" data-audio="${kwFile}" title="點擊聽單字">${w}</span>`;
       });
     }
 
@@ -856,7 +940,7 @@
       });
     }
 
-    function renderPage() {
+    function renderPage(fromNav = false) {
       const page = PAGES[currentPage];
       prevBtn.disabled = currentPage === 0;
       nextBtn.disabled = currentPage === PAGES.length - 1;
@@ -869,22 +953,24 @@
             <div class="cover-info">
               <span class="cover-tag">Book 1 · 打招呼與情緒</span>
               <h1 class="cover-title">Hello, Pip!</h1>
-              <p class="cover-sub">小一零基礎英文啟蒙繪本<br/>點點文字與圖片，跟著 Mia 和小恐龍 Pip 一起開口說英文！</p>
+              <p class="cover-sub">小一零基礎英文啟蒙繪本<br/>點點圖畫或對話，跟著 Mia 和小恐龍 Pip 一起開口說英文！</p>
               <button class="cta-btn" type="button" id="startBtn">▶ Start Reading 開始看故事</button>
             </div>
           </div>
         `;
         document.getElementById('startBtn').addEventListener('click', () => {
           goToPage(1);
-          playClip('title.mp3', 'Hello, Pip!', 'mia');
         });
         return;
       }
 
-      if (page.type === 'story' || page.type === 'happy-custom') {
-        const visualHtml = page.type === 'happy-custom'
-          ? `<div class="happy-stage"><img src="${page.img}" alt="${page.alt}" /></div>`
-          : `<img class="scene-img" src="${page.img}" alt="${page.alt}" />`;
+      if (page.type === 'story' || page.type === 'warmup' || page.type === 'happy-custom') {
+        let visualHtml = `<img class="scene-img" src="${page.img}" alt="${page.alt}" />`;
+        if (page.type === 'warmup') {
+          visualHtml = `<div class="warmup-stage"><img src="${page.img}" alt="${page.alt}" /></div>`;
+        } else if (page.type === 'happy-custom') {
+          visualHtml = `<div class="happy-stage"><img src="${page.img}" alt="${page.alt}" /></div>`;
+        }
 
         const bubblesHtml = page.lines.map((line, idx) => `
           <button type="button" class="speech-bubble ${line.speaker}" data-line-idx="${idx}">
@@ -894,12 +980,29 @@
         `).join('');
 
         bookCard.innerHTML = `
-          <div class="scene-view">${visualHtml}</div>
+          <div class="scene-view tappable" id="sceneTapArea" role="button" tabindex="0" aria-label="點擊圖片朗讀本頁對話">
+            ${visualHtml}
+            <span class="tap-hint">👆 點點圖片或氣泡就會說話喔！</span>
+          </div>
           <div class="bubbles-layer">
             <div class="bubble-group">${bubblesHtml}</div>
-            ${page.sfx ? `<button type="button" class="sfx-btn" id="sfxBtn">${page.sfx.label}</button>` : ''}
+            <div class="side-actions">
+              ${page.sfx ? `<button type="button" class="sfx-btn" id="sfxBtn">${page.sfx.label}</button>` : ''}
+              <button type="button" class="replay-circle" id="replayBtn" title="再聽一次本頁對話" aria-label="再聽一次本頁對話">🔊</button>
+            </div>
           </div>
         `;
+
+        const tapArea = document.getElementById('sceneTapArea');
+        tapArea.addEventListener('click', () => speakSequence(page.lines));
+        tapArea.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            speakSequence(page.lines);
+          }
+        });
+
+        document.getElementById('replayBtn').addEventListener('click', () => speakSequence(page.lines));
 
         bookCard.querySelectorAll('.speech-bubble').forEach(btn => {
           btn.addEventListener('click', e => {
@@ -912,13 +1015,16 @@
         bookCard.querySelectorAll('.kw').forEach(kw => {
           kw.addEventListener('click', e => {
             e.stopPropagation();
-            const w = kw.dataset.word.toLowerCase();
-            playClip(`kw_${w}.mp3`, kw.dataset.word, 'mia');
+            playClip(kw.dataset.audio, kw.dataset.word, 'mia');
           });
         });
 
         const sfxBtn = document.getElementById('sfxBtn');
         if (sfxBtn) sfxBtn.addEventListener('click', () => playSfx(page.sfx.sound));
+
+        if (fromNav && autoRead) {
+          setTimeout(() => speakSequence(page.lines), 220);
+        }
         return;
       }
 
@@ -944,33 +1050,96 @@
         return;
       }
 
-      if (page.type === 'quiz') {
-        const target = EMOTIONS[quizIndex % EMOTIONS.length];
+      if (page.type === 'chant') {
         bookCard.innerHTML = `
           <section class="panel-page">
-            <h2 class="panel-title">Listen & Tap! 聽聲音找表情</h2>
-            <p class="panel-desc">先按「播放題目」，再點選出正確的 Pip 圖片！（第 ${(quizIndex % EMOTIONS.length) + 1} / 4 題 · 星星：⭐ ${quizScore}）</p>
+            <h2 class="panel-title">Chant &amp; Act! 跟著 Pip 動一動</h2>
+            <p class="panel-desc">點一張卡片，先聽 Mia 唸節奏口訣，再跟著做出動作並大聲說出來！</p>
+            <div class="grid-2">
+              ${CHANTS.map((c, idx) => `
+                <button type="button" class="chant-card" data-idx="${idx}">
+                  <img src="${c.img}" alt="${c.word}" />
+                  <div>
+                    <span class="chant-line">${c.line} 🔊</span>
+                    <span class="chant-act">${c.action}</span>
+                  </div>
+                </button>
+              `).join('')}
+            </div>
+          </section>
+        `;
+        bookCard.querySelectorAll('.chant-card').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const c = CHANTS[Number(btn.dataset.idx)];
+            playClipChain([
+              { file: c.chantAudio, text: c.line, speaker: 'mia' },
+              { file: c.pipAudio, text: c.pipLine, speaker: 'pip' }
+            ]);
+          });
+        });
+        return;
+      }
+
+      if (page.type === 'quiz') {
+        if (quizIndex >= quizOrder.length) {
+          bookCard.innerHTML = `
+            <section class="panel-page win-box">
+              <div class="trophy">🏆</div>
+              <h2 class="panel-title">Hooray! 通關成功！</h2>
+              <p class="panel-desc">你答對了全部 4 題，獲得 ⭐ ${quizScore} 顆星星！</p>
+              <button type="button" class="cta-btn" id="restartQuizBtn">🔄 再玩一次</button>
+            </section>
+          `;
+          playSfx('happy');
+          playClip('quiz_win.mp3', 'Hooray! You got four stars! Good job!', 'mia');
+          document.getElementById('restartQuizBtn').addEventListener('click', () => {
+            quizOrder = shuffle(EMOTIONS);
+            quizIndex = 0;
+            quizScore = 0;
+            quizLocked = false;
+            renderPage();
+          });
+          return;
+        }
+
+        const target = quizOrder[quizIndex];
+        const options = shuffle(EMOTIONS);
+        const playQuestion = () => {
+          playClipChain([
+            { file: 'quiz_q_mia.mp3', text: 'How are you, Pip?', speaker: 'mia' },
+            { file: target.audio, text: target.sentence, speaker: 'pip' }
+          ]);
+        };
+
+        bookCard.innerHTML = `
+          <section class="panel-page">
+            <h2 class="panel-title">Listen &amp; Tap! 聽聲音找表情</h2>
+            <p class="panel-desc">第 ${quizIndex + 1} / ${quizOrder.length} 題 · ⭐ ${quizScore} 顆星（聽聽看 Pip 怎麼回答，再點出正確圖片！）</p>
             <div class="quiz-bar">
               <button type="button" class="cta-btn" id="playQuizBtn">🔊 播放題目</button>
             </div>
             <div class="grid-4">
-              ${EMOTIONS.map(em => `
-                <button type="button" class="card-tile quiz-opt" data-word="${em.word}">
-                  <img src="${em.img}" alt="${em.word}" />
-                  <span class="tile-word">${em.word}</span>
+              ${options.map(em => `
+                <button type="button" class="card-tile quiz-opt" data-word="${em.word}" aria-label="選項圖片">
+                  <img src="${em.img}" alt="Pip expression option" />
                 </button>
               `).join('')}
             </div>
             <div id="quizFeedback" class="quiz-feedback" aria-live="polite"></div>
           </section>
         `;
+
         const fb = document.getElementById('quizFeedback');
-        document.getElementById('playQuizBtn').addEventListener('click', () => {
-          playClip(target.quizAudio, `How are you, Pip? ${target.sentence}`, 'pip');
-        });
+        document.getElementById('playQuizBtn').addEventListener('click', playQuestion);
+        if (fromNav && autoRead) {
+          setTimeout(playQuestion, 250);
+        }
+
         bookCard.querySelectorAll('.quiz-opt').forEach(opt => {
           opt.addEventListener('click', () => {
+            if (quizLocked) return;
             if (opt.dataset.word === target.word) {
+              quizLocked = true;
               playSfx('happy');
               quizScore++;
               fb.style.color = '#2b8a3e';
@@ -978,8 +1147,9 @@
               playClip('quiz_good.mp3', 'Good job!', 'mia');
               setTimeout(() => {
                 quizIndex++;
-                renderPage();
-              }, 1100);
+                quizLocked = false;
+                renderPage(true);
+              }, 1150);
             } else {
               playSfx('oops');
               fb.style.color = '#d9480f';
@@ -1049,34 +1219,41 @@
     function goToPage(index) {
       stopAllAudio();
       currentPage = Math.max(0, Math.min(PAGES.length - 1, index));
-      renderPage();
+      renderPage(true);
     }
 
     prevBtn.addEventListener('click', () => goToPage(currentPage - 1));
     nextBtn.addEventListener('click', () => goToPage(currentPage + 1));
 
+    autoReadBtn.addEventListener('click', () => {
+      autoRead = !autoRead;
+      autoReadBtn.setAttribute('aria-pressed', String(autoRead));
+      autoReadBtn.textContent = autoRead ? '🔊 自動朗讀：開啟' : '🔇 自動朗讀：關閉';
+    });
+
     speedBtn.addEventListener('click', () => {
       slowMode = !slowMode;
       speedBtn.setAttribute('aria-pressed', String(slowMode));
-      speedBtn.textContent = slowMode ? '🐢 慢速跟讀：開啟 (0.8x)' : '🐢 慢速跟讀：關閉 (1.0x)';
+      speedBtn.textContent = slowMode ? '🐢 慢速：開 (0.8x)' : '🐢 慢速：關';
     });
 
-    readAllBtn.addEventListener('click', () => {
-      const page = PAGES[currentPage];
-      if (page.lines) speakSequence(page.lines);
-      else if (page.type === 'cover') playClip('title.mp3', 'Hello, Pip!', 'mia');
-      else if (page.type === 'review') playClip('rev_title.mp3', 'How is Pip?', 'mia');
+    document.getElementById('jumpStoryBtn').addEventListener('click', () => goToPage(1));
+    document.getElementById('jumpChantBtn').addEventListener('click', () => goToPage(PAGES.findIndex(p => p.type === 'chant')));
+    document.getElementById('jumpQuizBtn').addEventListener('click', () => {
+      quizOrder = shuffle(EMOTIONS);
+      quizIndex = 0;
+      quizScore = 0;
+      quizLocked = false;
+      goToPage(PAGES.findIndex(p => p.type === 'quiz'));
     });
-
-    document.getElementById('jumpDictBtn').addEventListener('click', () => goToPage(PAGES.length - 2));
-    document.getElementById('jumpQuizBtn').addEventListener('click', () => goToPage(PAGES.length - 3));
+    document.getElementById('jumpDictBtn').addEventListener('click', () => goToPage(PAGES.findIndex(p => p.type === 'dictionary')));
 
     document.addEventListener('keydown', e => {
       if (e.key === 'ArrowRight') goToPage(currentPage + 1);
       if (e.key === 'ArrowLeft') goToPage(currentPage - 1);
     });
 
-    renderPage();
+    renderPage(false);
   </script>
 </body>
 </html>
