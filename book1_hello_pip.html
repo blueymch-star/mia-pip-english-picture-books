@@ -494,6 +494,56 @@
 
     .trophy { font-size: 4.2rem; animation: bouncePop 1.4s ease-in-out infinite; }
 
+    .song-controls {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .song-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 16px;
+    }
+
+    .song-verse {
+      background: #fff;
+      border: 3px solid #f0e4ce;
+      border-radius: 22px;
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .song-verse h3 {
+      margin: 0 0 4px;
+      font-size: 1rem;
+      color: var(--mint);
+    }
+
+    .song-line {
+      width: 100%;
+      text-align: left;
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: #fffdf8;
+      border: 2px solid #f2e5ce;
+      font-size: 22px;
+      font-weight: 800;
+      transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .song-line:hover { background: #fff4df; border-color: var(--accent); }
+    .song-line.singing {
+      background: #fff3cd;
+      border-color: var(--accent);
+      transform: scale(1.02);
+      box-shadow: 0 6px 16px rgba(255, 140, 66, 0.2);
+    }
+
     .guide-box {
       max-width: 760px;
       margin: 0 auto;
@@ -568,6 +618,7 @@
       <button id="jumpStoryBtn" class="pill-btn" type="button">📖 故事</button>
       <button id="jumpChantBtn" class="pill-btn" type="button">💃 動一動</button>
       <button id="jumpQuizBtn" class="pill-btn" type="button">⭐ 小遊戲</button>
+      <button id="jumpSongBtn" class="pill-btn" type="button">🎵 兒歌</button>
       <button id="jumpDictBtn" class="pill-btn" type="button">🔤 小詞典</button>
     </nav>
   </header>
@@ -646,8 +697,17 @@
       document.querySelectorAll('.speech-bubble.talking').forEach(el => el.classList.remove('talking'));
     }
 
+    let songTimers = [];
+
+    function clearSongTimers() {
+      songTimers.forEach(id => clearTimeout(id));
+      songTimers = [];
+      document.querySelectorAll('.song-line.singing').forEach(el => el.classList.remove('singing'));
+    }
+
     function stopAllAudio() {
       sequenceToken++;
+      clearSongTimers();
       if (currentAudio) {
         currentAudio.pause();
         currentAudio.currentTime = 0;
@@ -839,9 +899,54 @@
       { type: 'review' },
       { type: 'chant' },
       { type: 'quiz' },
+      { type: 'song' },
       { type: 'dictionary' },
       { type: 'guide' }
     ];
+
+    const SONG_LINES = [
+      { verse: 1, file: 'song_1.mp3', text: 'Hello, Pip! Hello, Pip!', notes: [523.25, 587.33, 659.25, 523.25, 523.25, 587.33, 659.25, 523.25], stepMs: 360 },
+      { verse: 1, file: 'song_2.mp3', text: 'How are you? How are you?', notes: [659.25, 698.46, 783.99, 659.25, 698.46, 783.99], stepMs: 420 },
+      { verse: 1, file: 'song_3.mp3', text: "I'm sleepy! I'm hungry!", notes: [783.99, 880.0, 783.99, 698.46, 659.25, 523.25, 783.99, 880.0, 783.99, 698.46, 659.25, 523.25], stepMs: 260 },
+      { verse: 1, file: 'song_4.mp3', text: 'Bye-bye, Pip! Bye-bye, Pip!', notes: [523.25, 392.0, 523.25, 523.25, 392.0, 523.25], stepMs: 420 },
+      { verse: 2, file: 'song_5.mp3', text: 'Hello, Mia! Hello, Mia!', notes: [523.25, 587.33, 659.25, 523.25, 523.25, 587.33, 659.25, 523.25], stepMs: 360 },
+      { verse: 2, file: 'song_6.mp3', text: 'How are you? How are you?', notes: [659.25, 698.46, 783.99, 659.25, 698.46, 783.99], stepMs: 420 },
+      { verse: 2, file: 'song_7.mp3', text: "I was sad! Now I'm happy!", notes: [783.99, 880.0, 783.99, 698.46, 659.25, 523.25, 783.99, 880.0, 783.99, 698.46, 659.25, 523.25], stepMs: 260 },
+      { verse: 2, file: 'song_8.mp3', text: 'Yay, yay, yay! Good job, Pip!', notes: [523.25, 392.0, 523.25, 523.25, 392.0, 523.25], stepMs: 420 }
+    ];
+
+    function playNote(freq, durationSec = 0.25) {
+      const ctx = getCtx();
+      if (!ctx) return;
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now);
+      gain.gain.setValueAtTime(0.12, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + durationSec);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + durationSec);
+    }
+
+    function playMelodyForLine(line, lineEl, withVocals) {
+      const speedScale = slowMode ? 1.25 : 1.0;
+      const step = line.stepMs * speedScale;
+      if (lineEl) lineEl.classList.add('singing');
+      line.notes.forEach((freq, i) => {
+        const tid = setTimeout(() => playNote(freq, (step / 1000) * 0.9), i * step);
+        songTimers.push(tid);
+      });
+      if (withVocals) {
+        const audio = new Audio(`assets/audio/${line.file}`);
+        currentAudio = audio;
+        audio.playbackRate = slowMode ? 0.8 : 1.0;
+        audio.play().catch(() => {});
+      }
+      return line.notes.length * step + 220;
+    }
 
     const EMOTIONS = [
       { word: 'sleepy', sentence: "I'm sleepy.", zh: '想睡覺的', img: 'assets/pip_sleepy.jpg', audio: 'rev_sleepy.mp3' },
@@ -1161,6 +1266,68 @@
         return;
       }
 
+      if (page.type === 'song') {
+        const v1 = SONG_LINES.filter(l => l.verse === 1);
+        const v2 = SONG_LINES.filter(l => l.verse === 2);
+        const renderLineBtn = (l, idx) => `
+          <button type="button" class="song-line" data-sidx="${idx}">🎵 ${l.text}</button>
+        `;
+
+        bookCard.innerHTML = `
+          <section class="panel-page">
+            <h2 class="panel-title">🎵 Sing Together! 一起唱〈Hello, Pip!〉</h2>
+            <p class="panel-desc">搭配大家熟悉的《兩隻老虎》旋律，跟著 Mia 和 Pip 唱出今天學到的英文！</p>
+            <div class="song-controls">
+              <button type="button" class="cta-btn" id="singFullBtn">🎤 跟著 Mia &amp; Pip 一起唱</button>
+              <button type="button" class="pill-btn" id="singKaraokeBtn" style="font-size:1rem;padding:12px 20px;">🎹 只放伴奏（自己唱）</button>
+              <button type="button" class="pill-btn" id="stopSongBtn" style="font-size:1rem;padding:12px 18px;">⏹️ 停止</button>
+            </div>
+            <div class="song-grid">
+              <div class="song-verse">
+                <h3>Verse 1 · 打招呼與想睡／肚子餓</h3>
+                ${v1.map((l, i) => renderLineBtn(l, i)).join('')}
+              </div>
+              <div class="song-verse">
+                <h3>Verse 2 · 難過變開心！</h3>
+                ${v2.map((l, i) => renderLineBtn(l, i + 4)).join('')}
+              </div>
+            </div>
+          </section>
+        `;
+
+        const playFullSong = (withVocals) => {
+          stopAllAudio();
+          const lineBtns = document.querySelectorAll('.song-line');
+          let delay = 0;
+          SONG_LINES.forEach((line, idx) => {
+            const tid = setTimeout(() => {
+              document.querySelectorAll('.song-line.singing').forEach(el => el.classList.remove('singing'));
+              playMelodyForLine(line, lineBtns[idx], withVocals);
+            }, delay);
+            songTimers.push(tid);
+            const speedScale = slowMode ? 1.25 : 1.0;
+            delay += line.notes.length * line.stepMs * speedScale + 260;
+          });
+          const endTid = setTimeout(() => clearSongTimers(), delay + 100);
+          songTimers.push(endTid);
+        };
+
+        document.getElementById('singFullBtn').addEventListener('click', () => playFullSong(true));
+        document.getElementById('singKaraokeBtn').addEventListener('click', () => playFullSong(false));
+        document.getElementById('stopSongBtn').addEventListener('click', stopAllAudio);
+
+        bookCard.querySelectorAll('.song-line').forEach(btn => {
+          btn.addEventListener('click', () => {
+            stopAllAudio();
+            const line = SONG_LINES[Number(btn.dataset.sidx)];
+            const dur = playMelodyForLine(line, btn, true);
+            const tid = setTimeout(() => btn.classList.remove('singing'), dur);
+            songTimers.push(tid);
+          });
+        });
+        return;
+      }
+
       if (page.type === 'dictionary') {
         bookCard.innerHTML = `
           <section class="panel-page">
@@ -1246,6 +1413,7 @@
       quizLocked = false;
       goToPage(PAGES.findIndex(p => p.type === 'quiz'));
     });
+    document.getElementById('jumpSongBtn').addEventListener('click', () => goToPage(PAGES.findIndex(p => p.type === 'song')));
     document.getElementById('jumpDictBtn').addEventListener('click', () => goToPage(PAGES.findIndex(p => p.type === 'dictionary')));
 
     document.addEventListener('keydown', e => {
